@@ -8,7 +8,7 @@ myvideo.muted = true; //muted myself
 const peer = new Peer(undefined,{
   path:'/peerjs',
   host:'/',
-  port:'443'//3000
+  port:'3000'//443
 })
 
 let myvideoStream = 
@@ -134,3 +134,25 @@ document.execCommand('copy');
 document.body.removeChild(share);
 alert('you coppied text now share link to other Participants')
  }
+
+
+ const screenshare=() =>{
+   let ScreenStream=navigator.mediaDevices.getDisplayMedia({
+     video:{
+       cursor:'always'
+     },
+     audio:true
+   }).then(stream =>{
+     ScreenStream=stream;
+     screen(myvideo,stream);
+   })
+ }
+
+const screen =(video,stream) =>{
+  video.srcObject= stream;
+  video.addEventListener('loadedmetadata',()=>{
+    video.play();
+
+  });
+  videogrid.append(video);
+}
